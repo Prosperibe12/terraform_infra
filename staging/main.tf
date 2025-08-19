@@ -15,9 +15,9 @@ module "s3_bucket" {
    bucket_tag_env = local.environment
 }
 
-module "key_key_pair" {
-   source = "../modules/key_pair/"
-}
+# module "key_key_pair" {
+#    source = "../modules/key_pair/"
+# }
 
 # module "vpc" {
 #    source = "../modules/vpc/"

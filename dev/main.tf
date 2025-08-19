@@ -10,16 +10,16 @@ locals {
    webserver_name = "fruitbox-webserver"
 }
 
-# module "s3_bucket" {
-#    source = "../modules/s3_bucket"
-#    bucket_name = local.bucket_name
-#    bucket_tag_name = "fruitbox-project"
-#    bucket_tag_env = local.environment
-# }
+module "s3_bucket" {
+   source = "../modules/s3_bucket"
+   bucket_name = local.bucket_name
+   bucket_tag_name = "fruitbox-project"
+   bucket_tag_env = local.environment
+}
 
-# module "key_key_pair" {
-#    source = "../modules/key_pair"
-# }
+module "key_key_pair" {
+   source = "../modules/key_pair"
+}
 
 # module "vpc" {
 #    source = "../modules/vpc"

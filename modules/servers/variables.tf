@@ -1,9 +1,13 @@
 variable "ami_owners" {
-   default = "amazon"
+   default = "self"
+}
+
+variable "env" {
+   description = "Default project environment"
 }
 
 variable "ami_filter" {
-   default = "amzn2-ami-hvm*"
+   default = "smarteye-worker*"
 }
 
 variable "server_instance_type" {
@@ -11,11 +15,7 @@ variable "server_instance_type" {
 }
 
 variable "webserver_name" {
-   default = "fruitbox-webserver"
-}
-
-variable "webserver_environment" {
-   default = "dev"
+   description = "webserver name"
 }
 
 variable "key_pair_name" {
@@ -26,12 +26,12 @@ variable "security_group_id" {
    description = "Security group ID for the webserver"
 }
 
-variable "subnet_id" {
+variable "webserver_subnet_id" {
    description = "Subnet ID for the webserver"
 }
 
 variable "appserver_name" {
-   default = "fruitbox-appserver"
+   description = "Application server name"
 }
 
 variable "appserver_environment" {

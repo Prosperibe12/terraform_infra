@@ -4,6 +4,7 @@ node_modules
 # Local .terraform directories
 **/.terraform/*
 **/fruitbox_keypair.pem
+**/secret.tfvars
 
 # .tfstate files
 *.tfstate

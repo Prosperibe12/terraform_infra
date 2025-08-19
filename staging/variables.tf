@@ -1,5 +1,5 @@
 variable "region" {
-   default = "eu-west-2"
+   default = "us-east-1"
    description = "Default environment region"
 }
 
@@ -10,20 +10,9 @@ variable "cred_files" {
 variable "env" {
    type = string
    description = "Environment (dev/staging/prod)"
-   default = "dev"
+   default = "staging"
 }
 
 variable "bucket_name" {
-   type = string
    default = "fruitbox-bucket"
 }
-
-# variable "db_username" {
-#   type      = string
-#   sensitive = true
-# }
-
-# variable "db_password" {
-#   type      = string
-#   sensitive = true
-# }

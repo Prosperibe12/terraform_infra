@@ -8,6 +8,11 @@ locals {
    bucket_name = "${var.bucket_name}-${var.env}"
    appserver_name = "fruitbox-appserver"
    webserver_name = "fruitbox-webserver"
+   role_name = "fruitbox-eks-role"
+   eks_cluster_name = "fruitbox-eks-cluster"
+   eks_nodegrp_name = "fruitbox-nodegrp"
+   eks_version = "1.33"
+   eks_instance_type = "t3.large"
 }
 
 module "s3_bucket" {
@@ -33,23 +38,45 @@ module "security_group" {
    vpc_id = module.vpc.vpc_id
 }
 
-# module "database" {
-#    source = "../modules/database"
-#    env = local.environment
-#    subnet_group = module.vpc.db_subnet_group_name
-#    db_username   = var.db_username
-#    db_password   = var.db_password
-#    sec_grp_id = module.security_group.dbserver_sg_id
-# }
+module "roles" {
+   source = "../modules/roles"
+   env = local.environment
+   role_name = local.role_name
+}
 
-# module "ec2_instances" {
-#    source                      = "../modules/servers"
-#    key_pair_name               = module.key_key_pair.key_pair_name
-#    security_group_id           = module.security_group.webserver_sg_id
-#    appserver_security_group_id = module.security_group.appserver_sg_id
-#    env                         = local.environment
-#    webserver_name              = local.webserver_name
-#    appserver_name              = local.appserver_name
-#    webserver_subnet_id         = module.vpc.fruitbox_public_subnet_id
-#    appserver_subnet_id         = module.vpc.fruitbox_private_subnet1
-# }
+module "k8s_cluster" {
+   source = "../modules/k8s_cluster"
+   env = local.environment
+   eks_cluster_name = local.eks_cluster_name
+   eks_version = local.eks_version
+   fruitbox_eks_role_arn = module.roles.eks_role_arn
+   eks_subnet1 = module.vpc.fruitbox_private_subnet1
+   eks_subnet2 = module.vpc.fruitbox_private_subnet2
+   eks_subnet3 = module.vpc.fruitbox_private_subnet3
+   node_grp_name = local.eks_nodegrp_name
+   eks_role = module.roles.eks_role_name
+   nodegrp_arn_name = module.roles.nodegrp_role_arn
+   eks_nodegrp_role_name = module.roles.nodegrp_role_name
+   nodegrp_instance_type = local.eks_instance_type
+}
+
+module "database" {
+   source = "../modules/database"
+   env = local.environment
+   subnet_group = module.vpc.db_subnet_group_name
+   db_username   = var.db_username
+   db_password   = var.db_password
+   sec_grp_id = module.security_group.dbserver_sg_id
+}
+
+module "ec2_instances" {
+   source                      = "../modules/servers"
+   key_pair_name               = module.key_key_pair.key_pair_name
+   security_group_id           = module.security_group.webserver_sg_id
+   appserver_security_group_id = module.security_group.appserver_sg_id
+   env                         = local.environment
+   webserver_name              = local.webserver_name
+   appserver_name              = local.appserver_name
+   webserver_subnet_id         = module.vpc.fruitbox_public_subnet_id
+   appserver_subnet_id         = module.vpc.fruitbox_private_subnet1
+}

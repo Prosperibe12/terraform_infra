@@ -21,11 +21,11 @@ module "key_key_pair" {
    source = "../modules/key_pair"
 }
 
-# module "vpc" {
-#    source = "../modules/vpc"
-#    env = local.environment
-#    vpc_region = var.region
-# }
+module "vpc" {
+   source = "../modules/vpc"
+   env = local.environment
+   vpc_region = var.region
+}
 
 # module "security_group" {
 #    source = "../modules/security_group"

@@ -18,12 +18,12 @@ variable "bucket_name" {
    default = "fruitbox-bucket"
 }
 
-# variable "db_username" {
-#   type      = string
-#   sensitive = true
-# }
+variable "db_username" {
+  type      = string
+  sensitive = true
+}
 
-# variable "db_password" {
-#   type      = string
-#   sensitive = true
-# }
+variable "db_password" {
+  type      = string
+  sensitive = true
+}

@@ -27,11 +27,11 @@ module "vpc" {
    vpc_region = var.region
 }
 
-# module "security_group" {
-#    source = "../modules/security_group"
-#    env = local.environment
-#    vpc_id = module.vpc.vpc_id
-# }
+module "security_group" {
+   source = "../modules/security_group"
+   env = local.environment
+   vpc_id = module.vpc.vpc_id
+}
 
 # module "database" {
 #    source = "../modules/database"

@@ -24,3 +24,10 @@ module "vpc" {
    env = local.environment
    vpc_region = var.region
 }
+
+module "security_group" {
+   source = "../modules/security_group"
+   env = local.environment
+   vpc_id = module.vpc.vpc_id
+}
+

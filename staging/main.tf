@@ -30,3 +30,4 @@ module "security_group" {
    env = local.environment
    vpc_id = module.vpc.vpc_id
 }
+
